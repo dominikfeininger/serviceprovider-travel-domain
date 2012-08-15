@@ -1,10 +1,10 @@
 package places
-//@Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.5.2' )
 
 import groovy.json.*
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.*
 import serviceprovider.travel.domain.GooglePlace
+import groovyx.net.http.*
 
 class RestaurantController {
 
@@ -27,7 +27,7 @@ class RestaurantController {
 		//System.out.println(latitude)
 		
 		//make request
-		//def http = new HttpURLClient()
+		def http = new HttpURLClient()
 		//setup url, returns jason, makes request with google api places key:AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io
 		String staticUrl = "https://maps.googleapis.com/maps/api/place/search/json?location=$myLatitude,$myLongitude&radius=$range&types=food&keyword=$cuisine&sensor=false&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
 		//request
