@@ -1,10 +1,14 @@
 package places
 
 import groovy.json.*
+
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.*
 import serviceprovider.travel.domain.GooglePlace
 //import groovyx.net.http.*
+import static groovyx.net.http.ContentType.JSON
+import static groovyx.net.http.Method.POST
+import groovyx.net.http.HTTPBuilder
 
 class RestaurantController {
 
@@ -18,9 +22,15 @@ class RestaurantController {
 	}   
 	
 	def findAtYelp(){
-		//def http = new HttpURLClient()
-		String responseString = "{\"server_code\":100}"//= http.request('http://api.yelp.com/business_review_search?term=yelp&tl_lat=37.9&tl_long=-122.5&br_lat=37.788022&br_long=-122.399797&limit=3&ywsid=xmchYhnGZKTKWDn4ZfxlZA').toString()
-		render(text:responseString as JSON)
+		def http = new HTTPBuilder("http://api.yelp.com/business_review_search?term=yelp&tl_lat=37.9&tl_long=-122.5&br_lat=37.788022&br_long=-122.399797&limit=3&ywsid=xmchYhnGZKTKWDn4ZfxlZA")
+		http.request(POST, JSON) {  
+			//uri.path = ""  
+			//uri.query = [param1: 'p1']  
+			response.success = { resp, json ->    
+				System.out.println("success")  
+			}  
+		} 
+		render(text:response as JSON)
 	} 
 	
 	def findAtGoogle(){
