@@ -5,7 +5,7 @@ import groovy.json.*
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.*
 import serviceprovider.travel.domain.GooglePlace
-//import groovyx.net.http.*
+import groovyx.net.http.*
 import static groovyx.net.http.ContentType.JSON
 import static groovyx.net.http.Method.POST
 import groovyx.net.http.HTTPBuilder
@@ -22,6 +22,10 @@ class RestaurantController {
 	}   
 	
 	def findAtYelp(){
+		
+		def httpTest = new HttpURLClient()
+		def responseTest = httpTest.request(url: "www.google.de")
+		
 		def http = new HTTPBuilder("http://api.yelp.com/business_review_search?term=yelp&tl_lat=37.9&tl_long=-122.5&br_lat=37.788022&br_long=-122.399797&limit=3&ywsid=xmchYhnGZKTKWDn4ZfxlZA")
 		http.request(POST, JSON) {  
 			//uri.path = ""  
@@ -47,8 +51,8 @@ class RestaurantController {
 		//setup url, returns jason, makes request with google api places key:AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io
 		String staticUrl = "https://maps.googleapis.com/maps/api/place/search/json?location=$myLatitude,$myLongitude&radius=$range&types=food&keyword=$cuisine&sensor=false&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
 		//request
-		def result = "{\"server_code\":100}"//= http.request(url: staticUrl)
-		def data = result.getData().toString()
+		def result //= http.request(url: staticUrl)
+		def data = "{\"server_code\":100}"//result.getData().toString()
 		def jsonObj = new JsonSlurper().parseText(data)
 
 		GooglePlace place1 = new GooglePlace("googleplacename")
