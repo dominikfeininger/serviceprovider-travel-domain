@@ -47,11 +47,11 @@ class RestaurantController {
 		//System.out.println(latitude)
 		
 		//make request
-		//def http = new HttpURLClient()
+		def http = new HttpURLClient()
 		//setup url, returns jason, makes request with google api places key:AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io
 		String staticUrl = "https://maps.googleapis.com/maps/api/place/search/json?location=$myLatitude,$myLongitude&radius=$range&types=food&keyword=$cuisine&sensor=false&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
 		//request
-		def result //= http.request(url: staticUrl)
+		def result = http.request(url: staticUrl)
 		def data = "{\"server_code\":100}"//result.getData().toString()
 		def jsonObj = new JsonSlurper().parseText(data)
 
