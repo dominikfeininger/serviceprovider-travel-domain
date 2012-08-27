@@ -3,16 +3,21 @@ package placesTravelDomain
 class GooglePlace {
 
 	def scaffold = true
-
+	
+	static mapping = {
+		autoImport false
+	}
+	
+	//String id
 	String geometry
-	String icon
+	//String icon
 	String name
-	String reference
+	//String reference
 	String vicinity
 	String types
-	String server_code
-	String html_attributions
-	String results
+	//String server_code
+	//String html_attributions
+	//String results
 
 	GooglePlace(){
 	}

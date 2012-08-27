@@ -22,6 +22,10 @@ class RestaurantController {
 		def myLatitude = params.myLat
 		def myLongitude = params.myLon
 		def range = params.radius
+		if(params.radius == "0"){
+			//TODO: change
+			range = "2000"
+		}
 		def cuisine = params.cuisine
 		//System.out.println("myLatitude: " + myLatitude)
 		//System.out.println("myLongitude: " + myLongitude)
@@ -30,23 +34,21 @@ class RestaurantController {
 		def http = new HttpURLClient()
 		//setup url, returns jason, makes request with google api places key:AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io
 		String staticUrl = "https://maps.googleapis.com/maps/api/place/search/json?location=$myLatitude,$myLongitude&radius=$range&types=food&keyword=$cuisine&sensor=false&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
-		//System.out.println("staticUrl: " + staticUrl);
+		System.out.println("staticUrl: " + staticUrl);
 		//request
 		def result = http.request(url: staticUrl)
 		def dataR = result.getData().toString()
-		def madeData = dataR.substring(1)
-		def serverCode = "{\"server_code\":\"100\","
-		def data = serverCode += madeData += "}"
-		def jsonObj = new JsonSlurper().parseText(data)
+		def jsonObj = new JsonSlurper().parseText(dataR)
 
 		def results = jsonObj.results
 		//def JSONresults = results as JSON
-		//System.out.println("results: " + JSONresults);
+		System.out.println("results: " + dataR);
 
 		GooglePlace place// = new GooglePlace()//jsonObj.name)
 		//GooglePlace place = new GooglePlace("Soja Bohnen")
 		//System.out.println("place.name :" + place.name);
 		//place.save(flush : true)
+		def gPlaces =[]
 
 		JSONArray inputArray = new JSONArray(jsonObj.results);
 		inputArray.each {entry ->
@@ -63,10 +65,16 @@ class RestaurantController {
 			 println it
 			 }
 			 }*/
+			gPlaces.add(place)
 		}
+		
+		//def madeData = dataR.substring(1)
+		def serverCode = "{\"server_code\":\"100\", \"results\":"//"{\"server_code\":\"100\","
+		//def data = serverCode += madeData += "}"
+		
 		//System.out.println("syso");
 		//System.out.println("place.name :" + place.name);
-		render(text:place as JSON)//inputArray.length())
+		render(text:serverCode + (gPlaces as JSON) + "}")//inputArray.length()) //"{\"server_code\":\"100\"}")//
 	}
 	
 	def findInMinRange(){
