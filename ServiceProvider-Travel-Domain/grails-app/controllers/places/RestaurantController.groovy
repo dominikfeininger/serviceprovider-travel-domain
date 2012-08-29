@@ -42,7 +42,7 @@ class RestaurantController {
 
 		def results = jsonObj.results
 		//def JSONresults = results as JSON
-		System.out.println("results: " + dataR);
+		System.out.println("results: " + dataR);	
 
 		GooglePlace place// = new GooglePlace()//jsonObj.name)
 		//GooglePlace place = new GooglePlace("Soja Bohnen")
@@ -69,7 +69,7 @@ class RestaurantController {
 		}
 		
 		//def madeData = dataR.substring(1)
-		def serverCode = "{\"server_code\":\"100\", \"results\":"//"{\"server_code\":\"100\","
+		def serverCode = "{\"server_code\":\"100\", \"range\":\"$range\", \"results\":"//"{\"server_code\":\"100\","
 		//def data = serverCode += madeData += "}"
 		
 		//System.out.println("syso");
