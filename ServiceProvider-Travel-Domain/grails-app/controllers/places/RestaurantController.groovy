@@ -6,10 +6,23 @@ import org.codehaus.groovy.grails.web.json.*
 
 import placesTravelDomain.GooglePlace;
 import groovyx.net.http.*
-/*import static groovyx.net.http.ContentType.JSON
- import static groovyx.net.http.Method.POST
- import groovyx.net.http.HTTPBuilder*/
 
+
+/*
+GOOGLE
+RESTAURANT
+
+bar
+
+cafe
+
+food
+
+meal_delivery
+
+meal_takeaway
+
+*/
 class RestaurantController {
 
 	def index(){
