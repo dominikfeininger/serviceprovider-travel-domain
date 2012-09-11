@@ -5,9 +5,9 @@ import grails.converters.JSON
 
 public class PlaceHelper {
 
-	public static String serverCode151JSON = "\"server_code\":\"151\", \"message\":\"service not available\"}"
-	public static String serverCode100JSON = "\"server_code\":\"100\", \"message\":\"success\"}"
-	public static String serverCode251JSON = "\"server_code\":\"251\", \"message\":\"failed\"}"
+	public static String serverCode151JSON = "{\"server_code\":\"151\", \"message\":\"service not available\"}"
+	public static String serverCode100JSON = "{\"server_code\":\"100\", \"message\":\"success\"}"
+	public static String serverCode251JSON = "{\"server_code\":\"251\", \"message\":\"failed\"}"
 
 	public static String serverCode151XML = "<?xml version=\"1.0\"?><node><server_code>151</server_code><messgae>service not available</messgae></node>"
 	public static String serverCode100XML = "<?xml version=\"1.0\"?><node><server_code>100</server_code><messgae>success</messgae></node>"
@@ -60,7 +60,7 @@ public class PlaceHelper {
 		//request
 		def resp = http.request(url: uRL)
 		//make it JSON format
-		return JSON.parse(resp.getData().toString())
+		return resp.getData().toString()
 	}
 
 	static String makeHTTPRequestWithXML(String uRL){

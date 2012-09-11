@@ -10,7 +10,7 @@ class GooglePlace {
 	
 	//String id
 	String geometry
-	//String icon
+	String icon
 	String name
 	//String reference
 	String vicinity
@@ -29,12 +29,12 @@ class GooglePlace {
 		this.name = tmpName
 	}
 
-	GooglePlace(String tmpName, String tmpGeometry, String tmpTypes, String tmpVicinity){
+	GooglePlace(String tmpName, String tmpGeometry, String tmpTypes, String tmpVicinity, String tmpIcon){
+		this.icon = tmpIcon
 		this.name = tmpName
 		this.vicinity = tmpVicinity
 		this.geometry = tmpGeometry
 		this.types = tmpTypes
 	}
 
-	// list everything
 }

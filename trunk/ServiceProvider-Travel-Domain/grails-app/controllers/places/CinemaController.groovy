@@ -40,7 +40,7 @@ class CinemaController {
 			//System.out.println("uRL: " + uRL);
 			//request
 			def result = PlaceHelper.makeHTTPRequestWithJson(uRL)
-			def dataR = result.getData().toString()
+			def dataR = result.toString()
 			def jsonObj = new JsonSlurper().parseText(dataR)
 			def results = jsonObj.results
 			//System.out.println("results: " + dataR);
