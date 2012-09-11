@@ -40,7 +40,7 @@ class RestaurantController {
 			String uRL = "https://maps.googleapis.com/maps/api/place/search/json?location=$myLatitude,$myLongitude&radius=$range&types=food&keyword=$cuisine&sensor=false&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
 			//System.out.println("uRL: " + uRL);
 			def result = PlaceHelper.makeHTTPRequestWithJson(uRL)
-			def dataR = result.getData().toString()
+			def dataR = result.toString()
 			def jsonObj = new JsonSlurper().parseText(dataR)
 			def results = jsonObj.results
 			//System.out.println("results: " + dataR);
@@ -51,7 +51,7 @@ class RestaurantController {
 			JSONArray inputArray = new JSONArray(jsonObj.results);
 			inputArray.each {entry ->
 				JSONObject jo = entry
-				place = new GooglePlace(jo.name.toString(),jo.geometry.toString(),jo.types.toString(),jo.vicinity.toString())
+				place = new GooglePlace(jo.name.toString(),jo.geometry.toString(),jo.types.toString(),jo.vicinity.toString(),jo.icon.toString())
 				//System.out.println("place.name :" + place.name);
 				//System.out.println("place.geometry :" + place.geometry);
 				//System.out.println("place.types :" + place.types);

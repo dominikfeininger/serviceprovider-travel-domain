@@ -62,7 +62,7 @@ class CulturePlaceController {
 			//System.out.println("uRL: " + uRL);
 			//request
 			def result = PlaceHelper.makeHTTPRequestWithJson(uRL)
-			def dataR = result.getData()//.toString()
+			def dataR = result.toString()
 			/*
 			 System.out.println("result: " + result);
 			 System.out.println("dataR: " + dataR);
