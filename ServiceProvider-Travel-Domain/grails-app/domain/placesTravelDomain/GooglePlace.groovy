@@ -12,7 +12,9 @@ class GooglePlace {
 	String geometry
 	String icon
 	String name
-	//String reference
+	
+	//is unique id
+	String reference
 	String vicinity
 	String types
 	//String server_code
@@ -29,7 +31,8 @@ class GooglePlace {
 		this.name = tmpName
 	}
 
-	GooglePlace(String tmpName, String tmpGeometry, String tmpTypes, String tmpVicinity, String tmpIcon){
+	GooglePlace(String tmpReference, String tmpName, String tmpGeometry, String tmpTypes, String tmpVicinity, String tmpIcon){
+		this.reference = tmpReference
 		this.icon = tmpIcon
 		this.name = tmpName
 		this.vicinity = tmpVicinity

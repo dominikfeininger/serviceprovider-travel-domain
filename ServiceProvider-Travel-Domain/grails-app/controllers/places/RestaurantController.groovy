@@ -27,7 +27,7 @@ class RestaurantController {
 		try{
 			//parse url
 			def myLatitude = params.myLat
-			def myLongitude = params.myLon
+			def myLongitude = params.myLng
 			def range = params.radius
 			if(params.radius == "0"){
 				range = "2000"
@@ -51,7 +51,7 @@ class RestaurantController {
 			JSONArray inputArray = new JSONArray(jsonObj.results);
 			inputArray.each {entry ->
 				JSONObject jo = entry
-				place = new GooglePlace(jo.name.toString(),jo.geometry.toString(),jo.types.toString(),jo.vicinity.toString(),jo.icon.toString())
+				place = new GooglePlace(jo.reference.toString(),jo.name.toString(),jo.geometry.toString(),jo.types.toString(),jo.vicinity.toString(),jo.icon.toString())
 				//System.out.println("place.name :" + place.name);
 				//System.out.println("place.geometry :" + place.geometry);
 				//System.out.println("place.types :" + place.types);
@@ -69,7 +69,9 @@ class RestaurantController {
 
 	def findInMinRange(){
 		try{
-			render(text: PlaceHelper.getServerCode100JSON()())
+			def range = PlaceHelper.calcRangeForDuration(params.minRange)
+			//System.out.println("range : " + range);
+			redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"$range", cuisine:"$params.cuisine"])
 		}catch(Exception){
 
 			render(text: PlaceHelper.getServerCode251JSON())
@@ -78,9 +80,14 @@ class RestaurantController {
 	
 	def findInDuration(){
 		try{
-			render(text: PlaceHelper.getServerCode100JSON()())
+			if(Integer.parseInt(params.duration) > 120){
+				System.out.println("over 120")
+				render(text: PlaceHelper.getServerCode100JSON())
+			}else{
+				System.out.println("under 120")
+				redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"2000	", cuisine:"$params.cuisine"])
+			}
 		}catch(Exception){
-
 			render(text: PlaceHelper.getServerCode251JSON())
 		}
 	}

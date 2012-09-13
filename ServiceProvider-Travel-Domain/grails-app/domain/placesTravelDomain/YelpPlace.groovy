@@ -7,6 +7,8 @@ class YelpPlace {
 	
 	def scaffold = true
 
+	//contains the unique id identifier
+	String identifier
 	String name
 	//String coordinate
 	String latitude
@@ -24,7 +26,8 @@ class YelpPlace {
 		this.coordinate = tmpCoordinate
 	}
 	
-	YelpPlace(String tmpName, String tmpLatitude, tmpLongitude, String tmpSnippet_Text, String tmpImage_Url){
+	YelpPlace(String tmpIdentifier, String tmpName, String tmpLatitude, tmpLongitude, String tmpSnippet_Text, String tmpImage_Url){
+		this.errors identifier = tmpId
 		this.name = tmpCenter
 		//this.coordinate = tmpCoordinate
 		this.latitude = tmpLatitude

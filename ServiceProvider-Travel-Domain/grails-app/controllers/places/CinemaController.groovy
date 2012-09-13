@@ -26,7 +26,7 @@ class CinemaController {
 		try{
 			//parse url
 			def myLatitude = params.myLat
-			def myLongitude = params.myLon
+			def myLongitude = params.myLng
 			def range = params.radius
 			if(params.radius == "0"){
 				//TODO: change
