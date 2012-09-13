@@ -1,5 +1,7 @@
 package places;
 
+import com.sun.jdi.IntegerValue;
+
 import groovyx.net.http.*
 import grails.converters.JSON
 
@@ -53,6 +55,11 @@ public class PlaceHelper {
 		return kind
 	}
 
+	static String calcRangeForDuration(String tmpDuration){
+		//adapt min range in meters divided by 1000 to get km * 20min (user needs 20min per km)
+		int duration = Integer.parseInt(tmpDuration)
+		return (duration/20)*1000
+	}
 
 	static String makeHTTPRequestWithJson(String uRL){
 		//build HttpURLClient object
