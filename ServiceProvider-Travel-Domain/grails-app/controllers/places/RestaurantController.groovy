@@ -1,9 +1,9 @@
 package places
 
 import groovy.json.*
+
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.*
-import placesTravelDomain.GooglePlace;
 import groovyx.net.http.*
 import places.PlaceHelper
 
