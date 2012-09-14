@@ -23,7 +23,7 @@ class NavigationController {
 			def destLatitude = params.destlat
 			def destLongitude = params.destlng
 			//System.out.println(latitude)
-			if((myLatitude != null) && (myLongitude != null) && (destLatitude =! null) && (destLongitude != null)){
+			if((myLatitude != null) && (myLongitude != null) && (destLatitude != null) && (destLongitude != null)){
 				//make request
 				String uRL = "http://maps.google.com/maps?saddr=$myLatitude,$myLongitude&daddr=$destLatitude,$destLongitude&output=html&dirflg=w&output=dragdir"
 				def result = PlaceHelper.makeHTTPRequestWithJson(uRL)

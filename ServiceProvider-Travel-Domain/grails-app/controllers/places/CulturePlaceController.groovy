@@ -78,7 +78,7 @@ class CulturePlaceController {
 				range = "2000"
 			}
 			def kind = PlaceHelper.convertCulturePlaceForGoogle(params.kind)
-			if((myLatitude != null) && (myLongitude != null) && (range =! null) && (kind != null)){
+			if((myLatitude != null) && (myLongitude != null) && (range != null) && (kind != null)){
 				//System.out.println("myLatitude: " + myLatitude)
 				//System.out.println("myLongitude: " + myLongitude)
 

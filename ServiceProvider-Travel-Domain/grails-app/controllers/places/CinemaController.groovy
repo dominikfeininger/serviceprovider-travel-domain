@@ -32,7 +32,7 @@ class CinemaController {
 				range = "2000"
 			}
 			def movieType = params.movieType
-			if((myLatitude != null) && (myLongitude != null) && (range =! null) && (movieType != null)){
+			if((myLatitude != null) && (myLongitude != null) && (range != null) && (movieType != null)){
 				//System.out.println("myLatitude: " + myLatitude)
 				//System.out.println("myLongitude: " + myLongitude)
 
