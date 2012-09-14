@@ -28,19 +28,38 @@ class CulturePlaceController {
 
 	def findInMinRange(){
 		try{
-			render(text: PlaceHelper.getServerCode100JSON()())
+			def range = PlaceHelper.calcRangeForDuration(params.minRange)
+			if(range != null){
+				//System.out.println("range : " + range);
+				redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"$kind", movieType:"$params.kind"])
+			}else{
+				//Parameter Error
+				render(text: PlaceHelper.getServerCode251JSON())
+				return
+			}
 		}catch(Exception){
 
-			render(text: PlaceHelper.getServerCode251JSON())
+			render(text: PlaceHelper.getServerCode261JSON())
 		}
 	}
 
 	def findInDuration(){
 		try{
-			render(text: PlaceHelper.getServerCode100JSON()())
+			if(params.duration != null){
+				if(Integer.parseInt(params.duration) > 120){
+					//System.out.println("over 120")
+					render(text: PlaceHelper.getServerCode100JSON())
+				}else{
+					//System.out.println("under 120")
+					redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"2000	", kind:"$params.kind"])
+				}
+			}else{
+				//Parameter Error
+				render(text: PlaceHelper.getServerCode251JSON())
+				return
+			}
 		}catch(Exception){
-
-			render(text: PlaceHelper.getServerCode251JSON())
+			render(text: PlaceHelper.getServerCode261JSON())
 		}
 	}
 
@@ -55,25 +74,24 @@ class CulturePlaceController {
 				range = "2000"
 			}
 			def kind = PlaceHelper.convertCulturePlaceForGoogle(params.kind)
-			//System.out.println("myLatitude: " + myLatitude)
-			//System.out.println("myLongitude: " + myLongitude)
+			if((myLatitude != null) && (myLongitude != null) && (range =! null) && (cuisine != null)){
+				//System.out.println("myLatitude: " + myLatitude)
+				//System.out.println("myLongitude: " + myLongitude)
 
-			String uRL = "https://maps.googleapis.com/maps/api/place/search/xml?location=$myLatitude,$myLongitude&radius=$range&types=$kind&sensor=true&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
-			//System.out.println("uRL: " + uRL);
-			//request
-			def result = PlaceHelper.makeHTTPRequestWithJson(uRL)
-			def dataR = result.toString()
-			/*
-			 System.out.println("result: " + result);
-			 System.out.println("dataR: " + dataR);
-			 System.out.println("dataR.status: " + dataR.status)
-			 System.out.println("dataR.result.name: " + dataR.result.name)
-			 System.out.println("\n\nXML response: ${dataR.status}");
-			 System.out.println("dataR.status: " + dataR.status);
-			 */
-			render(text: dataR.result.type)
+				String uRL = "https://maps.googleapis.com/maps/api/place/search/xml?location=$myLatitude,$myLongitude&radius=$range&types=$kind&sensor=true&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
+				//System.out.println("uRL: " + uRL);
+				//request
+				def result = PlaceHelper.makeHTTPRequestWithJson(uRL)
+				def dataR = result.toString()
+
+				render(text: dataR.result.type)
+			}else{
+				//Parameter Error
+				render(text: PlaceHelper.getServerCode251JSON())
+				return
+			}
 		}catch(Exception){
-			render(text:PlaceHelper.getServerCode251JSON())
+			render(text:PlaceHelper.getServerCode261JSON())
 		}
 	}
 }

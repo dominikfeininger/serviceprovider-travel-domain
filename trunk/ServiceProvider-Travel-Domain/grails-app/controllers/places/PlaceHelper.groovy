@@ -7,38 +7,47 @@ import grails.converters.JSON
 
 public class PlaceHelper {
 
-	public static String serverCode151JSON = "{\"server_code\":\"151\", \"message\":\"service not available\"}"
-	public static String serverCode100JSON = "{\"server_code\":\"100\", \"message\":\"success\"}"
-	public static String serverCode251JSON = "{\"server_code\":\"251\", \"message\":\"failed\"}"
+	public static String serverCode251JSON = "{\"server_code\":\"251\", \"message\":\"Parmeter Error in URL\"}"
+	public static String serverCode100JSON = "{\"server_code\":\"100\", \"message\":\"Success\"}"
+	public static String serverCode261JSON = "{\"server_code\":\"261\", \"message\":\"Connection Error\"}"
+	public static String serverCode210JSON = "{\"server_code\":\"210\", \"message\":\"Success, but no Results\"}"
 
-	public static String serverCode151XML = "<?xml version=\"1.0\"?><node><server_code>151</server_code><messgae>service not available</messgae></node>"
-	public static String serverCode100XML = "<?xml version=\"1.0\"?><node><server_code>100</server_code><messgae>success</messgae></node>"
-	public static String serverCode251XML = "<?xml version=\"1.0\"?><node><server_code>251</server_code><messgae>failed</messgae></node>"
+	public static String serverCode251XML = "<?xml version=\"1.0\"?><node><server_code>251</server_code><messgae>Parmeter Error in URL</messgae></node>"
+	public static String serverCode100XML = "<?xml version=\"1.0\"?><node><server_code>100</server_code><messgae>Success</messgae></node>"
+	public static String serverCode261XML = "<?xml version=\"1.0\"?><node><server_code>261</server_code><messgae>Connection Error</messgae></node>"
+	public static String serverCode210XML = "<?xml version=\"1.0\"?><node><server_code>210</server_code><messgae>Success, but no Results</messgae></node>"
 
-	static String getServerCode151XML(){
-		return serverCode151XML
+	static String getServerCode251XML(){
+		return serverCode251XML
 	}
 
 	static String getServerCode100XML(){
 		return serverCode100XML
 	}
 
-	static String getServerCode251XML(){
-		return serverCode251XML
+	static String getServerCode261XML(){
+		return serverCode261XML
 	}
 
-	static String getServerCode151JSON(){
-		return serverCode151JSON
+	static String getServerCode210XML(){
+		return serverCode210XML
+	}
+	
+	static String getServerCode251JSON(){
+		return serverCode251JSON
 	}
 
 	static String getServerCode100JSON(){
 		return serverCode100JSON
 	}
 
-	static String getServerCode251JSON(){
-		return serverCode251JSON
+	static String getServerCode261JSON(){
+		return serverCode261JSON
 	}
 
+	static String getServerCode210JSON(){
+		return serverCode210JSON
+	}
 	static String convertCulturePlaceForGoogle(String kind){
 
 		if(kind == "Monument")

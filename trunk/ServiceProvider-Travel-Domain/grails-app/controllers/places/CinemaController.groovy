@@ -33,56 +33,64 @@ class CinemaController {
 				range = "2000"
 			}
 			def movieType = params.movieType
-			//System.out.println("myLatitude: " + myLatitude)
-			//System.out.println("myLongitude: " + myLongitude)
+			if((myLatitude != null) && (myLongitude != null) && (range =! null) && (movieType != null)){
+				//System.out.println("myLatitude: " + myLatitude)
+				//System.out.println("myLongitude: " + myLongitude)
 
-			String uRL = "https://maps.googleapis.com/maps/api/place/search/json?location=$myLatitude,$myLongitude&radius=$range&types=movie_theater&sensor=false&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
-			//System.out.println("uRL: " + uRL);
-			//request
-			def result = PlaceHelper.makeHTTPRequestWithJson(uRL)
-			def dataR = result.toString()
-			def jsonObj = new JsonSlurper().parseText(dataR)
-			def results = jsonObj.results
-			//System.out.println("results: " + dataR);
+				String uRL = "https://maps.googleapis.com/maps/api/place/search/json?location=$myLatitude,$myLongitude&radius=$range&types=movie_theater&sensor=false&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
+				//System.out.println("uRL: " + uRL);
+				//request
+				def result = PlaceHelper.makeHTTPRequestWithJson(uRL)
+				def madeData = result.substring(1)
 
-			GooglePlace place
-			def gPlaces =[]
-
-			JSONArray inputArray = new JSONArray(jsonObj.results);
-			inputArray.each {entry ->
-				JSONObject jo = entry
-				place = new GooglePlace(jo.name.toString(),jo.geometry.toString(),jo.types.toString(),jo.vicinity.toString())
+				def serverCode = "{\"server_code\":\"100\", \"range\":\"$range\","
 				//System.out.println("place.name :" + place.name);
-				//System.out.println("place.geometry :" + place.geometry);
-				//System.out.println("place.types :" + place.types);
-				//System.out.println("place.vicinity :" + place.vicinity);
-				gPlaces.add(place)
+				render(text:serverCode + madeData)
+			}else{
+				//Parameter Error
+				render(text: PlaceHelper.getServerCode251JSON())
+				return
 			}
-
-			def serverCode = "{\"server_code\":\"100\", \"range\":\"$range\", \"results\":"
-			//System.out.println("place.name :" + place.name);
-			render(text:serverCode + (gPlaces as JSON) + "}")
 		}catch(Exception){
-			render(text:PlaceHelper.getServerCode251JSON())
+			render(text:PlaceHelper.getServerCode261JSON())
 		}
 	}
 
-		def findInMinRange(){
-					try{
-			render(text: PlaceHelper.getServerCode100JSON()())
+	def findInMinRange(){
+		try{
+			def range = PlaceHelper.calcRangeForDuration(params.minRange)
+			if(range != null){
+				//System.out.println("range : " + range);
+				redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"$range", movieType:"$params.movieType"])
+			}else{
+				//Parameter Error
+				render(text: PlaceHelper.getServerCode251JSON())
+				return
+			}
 		}catch(Exception){
 
-			render(text: PlaceHelper.getServerCode251JSON())
+			render(text: PlaceHelper.getServerCode261JSON())
 		}
-		}
-
-		def findInDuration(){
-					try{
-			render(text: PlaceHelper.getServerCode100JSON()())
-		}catch(Exception){
-
-			render(text: PlaceHelper.getServerCode251JSON())
-		}
-		}
-
 	}
+
+	def findInDuration(){
+		try{
+			if(params.duration != null){
+				if(Integer.parseInt(params.duration) > 120){
+					//System.out.println("over 120")
+					render(text: PlaceHelper.getServerCode100JSON())
+				}else{
+					//System.out.println("under 120")
+					redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"2000	", movieType:"$params.movieType"])
+				}
+			}else{
+				//Parameter Error
+				render(text: PlaceHelper.getServerCode251JSON())
+				return
+			}
+		}catch(Exception){
+			render(text: PlaceHelper.getServerCode261JSON())
+		}
+	}
+
+}
