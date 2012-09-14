@@ -25,13 +25,17 @@ class CulturePlaceController {
 	def index() {
 		render(text: "culturePlcae index")
 	}
+	
+	def getEventsForMuseum(){
+		render(text:PlaceHelper.getServerCode210XML())
+	}
 
 	def findInMinRange(){
 		try{
 			def range = PlaceHelper.calcRangeForDuration(params.minRange)
 			if(range != null){
 				//System.out.println("range : " + range);
-				redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"$kind", movieType:"$params.kind"])
+				redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"$range", kind:"$params.kind"])
 			}else{
 				//Parameter Error
 				render(text: PlaceHelper.getServerCode251JSON())
@@ -52,6 +56,7 @@ class CulturePlaceController {
 				}else{
 					//System.out.println("under 120")
 					redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"2000	", kind:"$params.kind"])
+					//System.out.println("over 120")
 				}
 			}else{
 				//Parameter Error
@@ -70,11 +75,10 @@ class CulturePlaceController {
 			def myLongitude = params.myLng
 			def range = params.radius
 			if(params.radius == "0"){
-				//TODO: change
 				range = "2000"
 			}
 			def kind = PlaceHelper.convertCulturePlaceForGoogle(params.kind)
-			if((myLatitude != null) && (myLongitude != null) && (range =! null) && (cuisine != null)){
+			if((myLatitude != null) && (myLongitude != null) && (range =! null) && (kind != null)){
 				//System.out.println("myLatitude: " + myLatitude)
 				//System.out.println("myLongitude: " + myLongitude)
 
