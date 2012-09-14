@@ -29,7 +29,6 @@ class CinemaController {
 			def myLongitude = params.myLng
 			def range = params.radius
 			if(params.radius == "0"){
-				//TODO: change
 				range = "2000"
 			}
 			def movieType = params.movieType
@@ -91,6 +90,10 @@ class CinemaController {
 		}catch(Exception){
 			render(text: PlaceHelper.getServerCode261JSON())
 		}
+	}
+	
+	def getMoviesForCiema(){
+		render(text:PlaceHelper.getServerCode210XML())
 	}
 
 }
