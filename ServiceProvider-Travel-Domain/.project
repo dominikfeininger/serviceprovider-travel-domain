@@ -26,7 +26,7 @@
 		<link>
 			<name>.link_to_grails_plugins</name>
 			<type>2</type>
-			<locationURI>GRAILS_ROOT/2.0.4/projects/ServiceProvider-Travel-Domain/plugins</locationURI>
+			<locationURI>GRAILS_ROOT/2.1.1/projects/ServiceProvider-Travel-Domain/plugins</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
