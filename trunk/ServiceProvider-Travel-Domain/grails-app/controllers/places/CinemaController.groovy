@@ -1,7 +1,9 @@
 package places
 
 import groovy.json.*
-
+import groovy.xml.*
+import grails.converters.XML
+import org.codehaus.groovy.grails.web.xml.*
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.*
 import groovyx.net.http.*
@@ -93,7 +95,7 @@ class CinemaController {
 	}
 	
 	def getMoviesForCiema(){
-		render(text:PlaceHelper.getServerCode210XML())
+		render(PlaceHelper.getServerCode210XML() as XML, contentType:"text/xml")
 	}
 
 }

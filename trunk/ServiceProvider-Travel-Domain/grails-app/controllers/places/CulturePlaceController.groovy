@@ -1,9 +1,5 @@
 package places
 
-import groovy.json.*
-
-import grails.converters.JSON
-import org.codehaus.groovy.grails.web.json.*
 import groovyx.net.http.*
 import groovy.xml.*
 import grails.converters.XML
@@ -12,6 +8,7 @@ import places.PlaceHelper
 
 /*
  GOOGLE
+
  CULTURE PLACES
  art_gallery|cemetery|church|hindu_temple|library|museum|rv_park|stadium|synagogue|zoo
  //match
@@ -27,7 +24,7 @@ class CulturePlaceController {
 	}
 	
 	def getEventsForMuseum(){
-		render(text:PlaceHelper.getServerCode210XML())
+		render(PlaceHelper.getServerCode210XML() as XML, contentType:"text/xml")
 	}
 
 	def findInMinRange(){
@@ -38,12 +35,12 @@ class CulturePlaceController {
 				redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"$range", kind:"$params.kind"])
 			}else{
 				//Parameter Error
-				render(text: PlaceHelper.getServerCode251JSON())
+				render(PlaceHelper.getServerCode251XML() as XML, contentType:"text/xml")
 				return
 			}
 		}catch(Exception){
 
-			render(text: PlaceHelper.getServerCode261JSON())
+			render(PlaceHelper.getServerCode261XML() as XML, contentType:"text/xml")
 		}
 	}
 
@@ -52,7 +49,7 @@ class CulturePlaceController {
 			if(params.duration != null){
 				if(Integer.parseInt(params.duration) > 120){
 					//System.out.println("over 120")
-					render(text: PlaceHelper.getServerCode100JSON())
+					render(PlaceHelper.getServerCode100XML() as XML, contentType:"text/xml")
 				}else{
 					//System.out.println("under 120")
 					redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"2000	", kind:"$params.kind"])
@@ -60,11 +57,11 @@ class CulturePlaceController {
 				}
 			}else{
 				//Parameter Error
-				render(text: PlaceHelper.getServerCode251JSON())
+				render(PlaceHelper.getServerCode251XML() as XML, contentType:"text/xml")
 				return
 			}
 		}catch(Exception){
-			render(text: PlaceHelper.getServerCode261JSON())
+			render(PlaceHelper.getServerCode261XML() as XML, contentType:"text/xml")
 		}
 	}
 
@@ -85,17 +82,17 @@ class CulturePlaceController {
 				String uRL = "https://maps.googleapis.com/maps/api/place/search/xml?location=$myLatitude,$myLongitude&radius=$range&types=$kind&sensor=true&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
 				//System.out.println("uRL: " + uRL);
 				//request
-				def result = PlaceHelper.makeHTTPRequestWithJson(uRL)
+				def result = PlaceHelper.makeHTTPRequestWithXML(uRL)
 				def dataR = result.toString()
 
-				render(text: dataR.result.type)
+				render( dataR.result.type as XML, contentType:"text/xml")
 			}else{
 				//Parameter Error
-				render(text: PlaceHelper.getServerCode251JSON())
+				render( PlaceHelper.getServerCode251XML() as XML, contentType:"text/xml")
 				return
 			}
 		}catch(Exception){
-			render(text:PlaceHelper.getServerCode261JSON())
+			render(PlaceHelper.getServerCode261XML() as XML, contentType:"text/xml")
 		}
 	}
 }
