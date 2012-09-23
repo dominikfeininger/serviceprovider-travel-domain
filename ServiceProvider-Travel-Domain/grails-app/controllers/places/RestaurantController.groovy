@@ -1,7 +1,6 @@
 package places
 
 import groovy.json.*
-
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.*
 import groovyx.net.http.*

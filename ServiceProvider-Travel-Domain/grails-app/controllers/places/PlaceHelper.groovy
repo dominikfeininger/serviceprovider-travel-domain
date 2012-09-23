@@ -1,7 +1,6 @@
 package places;
 
 import com.sun.jdi.IntegerValue;
-
 import groovyx.net.http.*
 import grails.converters.JSON
 
@@ -12,10 +11,10 @@ public class PlaceHelper {
 	public static String serverCode261JSON = "{\"server_code\":\"261\", \"message\":\"Connection Error\"}"
 	public static String serverCode210JSON = "{\"server_code\":\"210\", \"message\":\"Success, but no Results\"}"
 
-	public static String serverCode251XML = "<?xml version=\"1.0\"?><node><server_code>251</server_code><messgae>Parmeter Error in URL</messgae></node>"
-	public static String serverCode100XML = "<?xml version=\"1.0\"?><node><server_code>100</server_code><messgae>Success</messgae></node>"
-	public static String serverCode261XML = "<?xml version=\"1.0\"?><node><server_code>261</server_code><messgae>Connection Error</messgae></node>"
-	public static String serverCode210XML = "<?xml version=\"1.0\"?><node><server_code>210</server_code><messgae>Success, but no Results</messgae></node>"
+	public static String serverCode251XML = "<?xml version=\"1.0\"?><node><server_code>251</server_code><message>Parmeter Error in URL</message></node>"
+	public static String serverCode100XML = "<?xml version=\"1.0\"?><node><server_code>100</server_code><message>Success</message></node>"
+	public static String serverCode261XML = "<?xml version=\"1.0\"?><node><server_code>261</server_code><message>Connection Error</message></node>"
+	public static String serverCode210XML = "<?xml version=\"1.0\"?><node><server_code>210</server_code><message>Success, but no Results</message></node>"
 
 	static String getServerCode251XML(){
 		return serverCode251XML
@@ -32,7 +31,7 @@ public class PlaceHelper {
 	static String getServerCode210XML(){
 		return serverCode210XML
 	}
-	
+
 	static String getServerCode251JSON(){
 		return serverCode251JSON
 	}
@@ -51,15 +50,15 @@ public class PlaceHelper {
 	static String convertCulturePlaceForGoogle(String kind){
 
 		if(kind == "Monument")
-		kind = "hindu_temple%7Crv_park%7Csynagogue"
+			kind = "hindu_temple%7Crv_park%7Csynagogue"
 		else if(kind == "Museum")
-		kind = "museum%7Cart_gallery"
+			kind = "museum%7Cart_gallery"
 		else if(kind == "Church")
-		kind = "church%7Chindu_temple%7Ccemetery%7Csynagogue"
+			kind = "church%7Chindu_temple%7Ccemetery%7Csynagogue"
 		else if(kind == "Nature")
-		kind = "rv_park"
+			kind = "rv_park"
 		else if(kind == "Landmark")
-		kind = "zoo%7Cstadium"
+			kind = "zoo%7Cstadium"
 
 		return kind
 	}
