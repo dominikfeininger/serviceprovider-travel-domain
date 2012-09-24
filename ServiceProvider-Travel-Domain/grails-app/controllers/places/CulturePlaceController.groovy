@@ -8,7 +8,6 @@ import places.PlaceHelper
 
 /*
  GOOGLE
-
  CULTURE PLACES
  art_gallery|cemetery|church|hindu_temple|library|museum|rv_park|stadium|synagogue|zoo
  //match
@@ -22,9 +21,9 @@ class CulturePlaceController {
 	def index() {
 		render(text: "culturePlcae index")
 	}
-	
+
 	def getEventsForMuseum(){
-		render(PlaceHelper.getServerCode210XML() as XML, contentType:"text/xml")
+		render(text: PlaceHelper.getServerCode210XML() as String, contentType:"text/xml", encoding:"UTF-8")
 	}
 
 	def findInMinRange(){
@@ -35,12 +34,12 @@ class CulturePlaceController {
 				redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"$range", kind:"$params.kind"])
 			}else{
 				//Parameter Error
-				render(PlaceHelper.getServerCode251XML() as XML, contentType:"text/xml")
+				render(text: PlaceHelper.getServerCode251XML() as String, contentType:"text/xml", encoding:"UTF-8")
 				return
 			}
 		}catch(Exception){
 
-			render(PlaceHelper.getServerCode261XML() as XML, contentType:"text/xml")
+			render(text: PlaceHelper.getServerCode261XML() as String, contentType:"text/xml", encoding:"UTF-8")
 		}
 	}
 
@@ -49,7 +48,7 @@ class CulturePlaceController {
 			if(params.duration != null){
 				if(Integer.parseInt(params.duration) > 120){
 					//System.out.println("over 120")
-					render(PlaceHelper.getServerCode100XML() as XML, contentType:"text/xml")
+					render(text: PlaceHelper.getServerCode100XML() as String, contentType:"text/xml", encoding:"UTF-8")
 				}else{
 					//System.out.println("under 120")
 					redirect(action:"findInKmRange", params:[myLat:"$params.myLat", myLng:"$params.myLng", radius:"2000	", kind:"$params.kind"])
@@ -57,11 +56,11 @@ class CulturePlaceController {
 				}
 			}else{
 				//Parameter Error
-				render(PlaceHelper.getServerCode251XML() as XML, contentType:"text/xml")
+				render(text: PlaceHelper.getServerCode251XML() as String, contentType:"text/xml", encoding:"UTF-8")
 				return
 			}
 		}catch(Exception){
-			render(PlaceHelper.getServerCode261XML() as XML, contentType:"text/xml")
+			render(text:PlaceHelper.getServerCode261XML() as String, contentType:"text/xml", encoding:"UTF-8")
 		}
 	}
 
@@ -75,24 +74,30 @@ class CulturePlaceController {
 				range = "2000"
 			}
 			def kind = PlaceHelper.convertCulturePlaceForGoogle(params.kind)
-			if((myLatitude != null) && (myLongitude != null) && (range != null) && (kind != null)){
+			//System.out.println("kind" + kind);
+			System.out.println("params.myLat: " + params.myLat)
+			System.out.println("myLongitude: " + myLongitude)
+			//http://feininger.dyndns.info:8090/ServiceProvider-Travel-Domain/culturePlace/findInKmRange?
+			//System.out.println("range: " + range);
+			if((myLatitude != null) && (myLongitude != null) && (kind != null) && (range != null)){
 				//System.out.println("myLatitude: " + myLatitude)
 				//System.out.println("myLongitude: " + myLongitude)
 
 				String uRL = "https://maps.googleapis.com/maps/api/place/search/xml?location=$myLatitude,$myLongitude&radius=$range&types=$kind&sensor=true&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
-				//System.out.println("uRL: " + uRL);
+				System.out.println("uRL: " + uRL);
 				//request
 				def result = PlaceHelper.makeHTTPRequestWithXML(uRL)
 				def dataR = result.toString()
-
-				render( dataR.result.type as XML, contentType:"text/xml")
+				System.out.println("dataR: " + dataR);
+				render(text: dataR.result.types as String, contentType:"text/xml", encoding:"UTF-8")
 			}else{
 				//Parameter Error
-				render( PlaceHelper.getServerCode251XML() as XML, contentType:"text/xml")
+				System.out.println("parameter error");
+				render(text: PlaceHelper.getServerCode251XML() as String, contentType:"text/xml", encoding:"UTF-8")
 				return
 			}
 		}catch(Exception){
-			render(PlaceHelper.getServerCode261XML() as XML, contentType:"text/xml")
+			render(text: PlaceHelper.getServerCode261XML() as String, contentType:"text/xml", encoding:"UTF-8")
 		}
 	}
 }

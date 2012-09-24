@@ -95,7 +95,7 @@ class CinemaController {
 	}
 	
 	def getMoviesForCiema(){
-		render(PlaceHelper.getServerCode210XML() as XML, contentType:"text/xml")
+		render(text: PlaceHelper.getServerCode210XML() as String, contentType:"text/xml", encoding:"UTF-8")
 	}
 
 }
