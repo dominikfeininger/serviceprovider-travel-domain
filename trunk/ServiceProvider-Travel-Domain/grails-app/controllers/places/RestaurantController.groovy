@@ -35,7 +35,7 @@ class RestaurantController {
 			//System.out.println("myLatitude: " + myLatitude)
 			//System.out.println("myLongitude: " + myLongitude)
 			if((myLatitude != null) && (myLongitude != null) && (range != null) && (cuisine != null)){
-
+				
 				//make request
 				String uRL = "https://maps.googleapis.com/maps/api/place/search/json?location=$myLatitude,$myLongitude&radius=$range&types=food&keyword=$cuisine&sensor=false&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
 				System.out.println("uRL: " + uRL);
