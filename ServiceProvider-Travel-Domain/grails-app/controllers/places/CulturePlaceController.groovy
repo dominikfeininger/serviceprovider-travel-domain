@@ -65,7 +65,7 @@ class CulturePlaceController {
 	}
 
 	def findInKmRange(){
-		try{
+		//try{
 			//parse url
 			def myLatitude = params.myLat
 			def myLongitude = params.myLng
@@ -75,8 +75,8 @@ class CulturePlaceController {
 			}
 			def kind = PlaceHelper.convertCulturePlaceForGoogle(params.kind)
 			//System.out.println("kind" + kind);
-			System.out.println("params.myLat: " + params.myLat)
-			System.out.println("myLongitude: " + myLongitude)
+			//System.out.println("params.myLat: " + params.myLat)
+			//System.out.println("myLongitude: " + myLongitude)
 			//http://feininger.dyndns.info:8090/ServiceProvider-Travel-Domain/culturePlace/findInKmRange?
 			//System.out.println("range: " + range);
 			if((myLatitude != null) && (myLongitude != null) && (kind != null) && (range != null)){
@@ -84,20 +84,19 @@ class CulturePlaceController {
 				//System.out.println("myLongitude: " + myLongitude)
 
 				String uRL = "https://maps.googleapis.com/maps/api/place/search/xml?location=$myLatitude,$myLongitude&radius=$range&types=$kind&sensor=true&key=AIzaSyBr9DXHMIE0FENaFKFE7P_S7HSmXh9-9Io"
-				System.out.println("uRL: " + uRL);
+				//System.out.println("uRL: " + uRL);
 				//request
 				def result = PlaceHelper.makeHTTPRequestWithXML(uRL)
-				def dataR = result.toString()
-				System.out.println("dataR: " + dataR);
-				render(text: dataR.result.types as String, contentType:"text/xml", encoding:"UTF-8")
+				//System.out.println("result: " + result as String);
+				render(text: result, encoding:"UTF-8", contentType:"text/xml")
 			}else{
 				//Parameter Error
-				System.out.println("parameter error");
+				//System.out.println("parameter error");
 				render(text: PlaceHelper.getServerCode251XML() as String, contentType:"text/xml", encoding:"UTF-8")
 				return
 			}
-		}catch(Exception){
+		/*}catch(Exception){
 			render(text: PlaceHelper.getServerCode261XML() as String, contentType:"text/xml", encoding:"UTF-8")
-		}
+		}*/
 	}
 }

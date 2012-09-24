@@ -3,6 +3,7 @@ package places;
 import com.sun.jdi.IntegerValue;
 import groovyx.net.http.*
 import grails.converters.JSON
+import static groovyx.net.http.ContentType.*
 
 public class PlaceHelper {
 
@@ -82,9 +83,9 @@ public class PlaceHelper {
 		//build HttpURLClient object
 		def http = new HttpURLClient( )
 		//request
-		def resp = http.request(url: uRL)
+		def resp = http.request(url:uRL)
+		//System.out.println("resp: " + resp.data);
 		//return it
-		//TODO: impl right way
-		return resp.getData().toString()
+		return resp.getData()
 	}
 }
